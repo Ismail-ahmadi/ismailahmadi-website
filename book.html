@@ -82,7 +82,12 @@
   .note{font-family:var(--f-m);font-size:12px;color:var(--dim);margin-top:8px}
 
   .done{background:linear-gradient(150deg,color-mix(in srgb,var(--blue) 22%,var(--panel-solid)),var(--panel-solid) 70%);border:1px solid var(--line-2);border-radius:16px;padding:34px;margin-top:30px;display:none}
-  .done h2{font-family:var(--f-d);margin-bottom:8px}
+  .done h2{font-family:var(--f-d);margin-bottom:14px}
+  .done .nextstep{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+  .done .nextstep .num{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--f-m);font-size:14px;font-weight:600}
+  .done .nextstep p{color:var(--dim);font-size:15.5px;line-height:1.55;margin:0}
+  .done .nextstep p b{color:var(--ink)}
+  .done .btn{margin-top:10px}
 
   @media(max-width:760px){
     .steps{grid-template-columns:1fr}
@@ -145,8 +150,9 @@
   </div>
 
   <div class="done" id="done">
-    <h2>✓ You're booked!</h2>
-    <p class="sub" id="doneMsg"></p>
+    <h2 id="doneTitle">✓ You're booked!</h2>
+    <div id="doneSteps"></div>
+    <a class="btn" href="index.html" id="doneBtn">✓ Yes, I saved it — back to homepage</a>
   </div>
 </div>
 
@@ -310,9 +316,17 @@
       document.getElementById('st2').classList.add('active');
       const done = document.getElementById('done');
       done.style.display = 'block';
-      document.getElementById('doneMsg').textContent = isProposal
-        ? 'Your proposed times are on their way to me — I\u2019ll confirm one by email shortly. (Step 2: watch your inbox!)'
-        : 'Step 2: open your email — accept the Google Calendar invite so the meeting is saved, and read the short prep note. Step 3: see you at the call!';
+      if (isProposal) {
+        document.getElementById('doneTitle').textContent = '✓ Times received!';
+        document.getElementById('doneSteps').innerHTML =
+          '<div class="nextstep"><span class="num">2</span><p><b>Watch your inbox.</b> I\u2019ll check my calendar against your proposed times and confirm one by email shortly.</p></div>' +
+          '<div class="nextstep"><span class="num">3</span><p><b>Meet with me</b> at the confirmed time — bring your questions and ideas.</p></div>';
+        document.getElementById('doneBtn').textContent = '← Back to homepage';
+      } else {
+        document.getElementById('doneSteps').innerHTML =
+          '<div class="nextstep"><span class="num">2</span><p><b>Open your email.</b> Accept the Google Calendar invite (hit <b>Yes</b>) so the meeting is saved to your calendar — the Meet link is inside. There\u2019s also an Add-to-Calendar button and a calendar file if you use Outlook or Apple Calendar.</p></div>' +
+          '<div class="nextstep"><span class="num">3</span><p><b>Meet with me</b> at your chosen time — join the Google Meet link and bring your questions and ideas.</p></div>';
+      }
       done.scrollIntoView({ behavior: 'smooth' });
     } catch (e) {
       btn.disabled = false; btn.textContent = 'Try again';
