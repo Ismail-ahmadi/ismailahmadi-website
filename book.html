@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Free Consultation — Ismail Ahmadi</title>
+<meta name="description" content="Book a free 30-minute consultation with Ismail Ahmadi — AI, automation, and e-commerce. Times shown in your local timezone.">
+<link rel="canonical" href="https://ismailahmadi.com/book.html">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0A1426;--panel:#12234280;--panel-solid:#122342;--ink:#EAF1FA;--dim:#9FB4CE;
+    --line:rgba(140,175,220,.16);--line-2:rgba(140,175,220,.28);--blue:#3E7BC4;--blue-2:#6AA5E8;--glow:rgba(83,140,210,.35);
+    --f-d:"Space Grotesk",sans-serif;--f-b:"Instrument Sans",sans-serif;--f-m:"IBM Plex Mono",monospace}
+  html[data-theme="light"]{--bg:#F4F7FB;--panel:#FFFFFFB0;--panel-solid:#FFFFFF;--ink:#12233C;--dim:#4A5E78;
+    --line:rgba(30,70,120,.14);--line-2:rgba(30,70,120,.26);--blue:#2A69B6;--blue-2:#1E508F;--glow:rgba(42,105,182,.18)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:var(--f-b);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;min-height:100vh}
+  body::before{content:"";position:fixed;inset:0;background:radial-gradient(900px 500px at 80% -10%,var(--glow),transparent 60%);pointer-events:none}
+  .wrap{max-width:760px;margin:0 auto;padding:40px 24px 80px;position:relative}
+  a{color:var(--blue-2)}
+  .back{font-family:var(--f-m);font-size:13.5px;text-decoration:none}
+  h1{font-family:var(--f-d);font-weight:700;font-size:clamp(28px,5vw,40px);letter-spacing:-.02em;margin:22px 0 8px}
+  .sub{color:var(--dim)}
+  .tzline{font-family:var(--f-m);font-size:13px;color:var(--blue-2);margin-top:10px}
+  .day{margin-top:26px}
+  .day h3{font-family:var(--f-d);font-size:17px;margin-bottom:10px;color:var(--ink)}
+  .slots{display:flex;flex-wrap:wrap;gap:10px}
+  .slot{font-family:var(--f-m);font-size:14px;border:1px solid var(--line-2);border-radius:10px;padding:10px 16px;background:var(--panel);color:var(--ink);cursor:pointer;transition:all .15s}
+  .slot:hover{border-color:var(--blue-2)}
+  .slot.sel{background:var(--blue);border-color:var(--blue);color:#fff}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;margin-top:30px}
+  label{font-size:14px;font-weight:600;display:block;margin-bottom:4px}
+  input,textarea{width:100%;padding:12px 14px;border:1px solid var(--line-2);border-radius:9px;background:var(--panel-solid);font-family:var(--f-b);font-size:15.5px;color:var(--ink);margin-bottom:14px}
+  input:focus,textarea:focus{outline:2px solid var(--blue-2)}
+  .btn{display:inline-block;background:var(--blue);color:#fff;padding:12px 24px;border-radius:9px;font-weight:600;font-size:15px;border:1px solid var(--blue);cursor:pointer}
+  .btn:disabled{opacity:.6;cursor:default}
+  .check{display:flex;gap:10px;align-items:flex-start;margin:22px 0 6px;cursor:pointer}
+  .check input{width:auto;margin:5px 0 0}
+  .check span{color:var(--dim);font-size:15px}
+  #proposeBox{display:none}
+  .note{font-family:var(--f-m);font-size:12.5px;color:var(--dim);margin-top:8px}
+  .loading{color:var(--dim);font-family:var(--f-m);font-size:14px;margin-top:26px}
+  .done{background:linear-gradient(150deg,color-mix(in srgb,var(--blue) 22%,var(--panel-solid)),var(--panel-solid) 70%);border:1px solid var(--line-2);border-radius:16px;padding:34px;margin-top:30px;display:none}
+  .done h2{font-family:var(--f-d);margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← ismailahmadi.com</a>
+  <h1>Book a free consultation</h1>
+  <p class="sub">30 minutes, zero pressure — you'll leave with real ideas you can keep. Pick any time below, or propose your own.</p>
+  <p class="tzline" id="tzline">Detecting your timezone…</p>
+
+  <div id="slotsArea"><p class="loading">Loading available times…</p></div>
+
+  <label class="check"><input type="checkbox" id="noTime">
+    <span><b>No time works for me</b> — I'll propose times that suit me instead.</span></label>
+
+  <div class="panel">
+    <div id="proposeBox">
+      <label for="proposals">Your proposed times (date, time &amp; timezone — add as many as you like)</label>
+      <textarea id="proposals" rows="4" placeholder="e.g.&#10;Tue July 14, 7:30 PM (Vancouver time)&#10;Thu July 16, any time after 6 PM PT"></textarea>
+    </div>
+    <label for="bname">Your name</label>
+    <input id="bname" type="text" autocomplete="name" required>
+    <label for="bemail">Your email</label>
+    <input id="bemail" type="email" autocomplete="email" required>
+    <button class="btn" id="submitBtn" disabled>Select a time above</button>
+    <p class="note">You'll get an instant confirmation email and a Google Calendar invite with the meeting link.</p>
+  </div>
+
+  <div class="done" id="done">
+    <h2>✓ You're booked!</h2>
+    <p class="sub" id="doneMsg"></p>
+  </div>
+</div>
+
+<script>
+  // Same Apps Script URL as the main site:
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyMAo5OMTEP4FH_ZOjSFlNNO9d1FiFn8zz46aublL9bRIZQDDp6tF3k5w1xzKs8sEfQ/exec';
+
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+  document.getElementById('tzline').textContent = 'All times shown in your timezone: ' + tz;
+  if (localStorage.getItem('theme')) document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
+
+  let selected = null;
+  const btn = document.getElementById('submitBtn');
+  const noTime = document.getElementById('noTime');
+  const proposeBox = document.getElementById('proposeBox');
+
+  function updateBtn() {
+    if (noTime.checked) { btn.disabled = false; btn.textContent = 'Send my proposed times'; }
+    else if (selected)  { btn.disabled = false; btn.textContent = 'Book this time'; }
+    else { btn.disabled = true; btn.textContent = 'Select a time above'; }
+  }
+
+  noTime.addEventListener('change', () => {
+    proposeBox.style.display = noTime.checked ? 'block' : 'none';
+    if (noTime.checked) { selected = null; document.querySelectorAll('.slot.sel').forEach(s => s.classList.remove('sel')); }
+    updateBtn();
+  });
+
+  fetch(SCRIPT_URL + '?action=slots')
+    .then(r => r.json())
+    .then(data => {
+      const area = document.getElementById('slotsArea');
+      area.innerHTML = '';
+      if (!data.slots || !data.slots.length) {
+        area.innerHTML = '<p class="loading">No open times in the next two weeks — use "No time works for me" below and propose yours.</p>';
+        return;
+      }
+      const dayFmt  = new Intl.DateTimeFormat(undefined, { weekday:'long', month:'long', day:'numeric', timeZone: tz });
+      const timeFmt = new Intl.DateTimeFormat(undefined, { hour:'numeric', minute:'2-digit', timeZone: tz });
+      const groups = {};
+      data.slots.forEach(s => {
+        const d = new Date(s.iso);
+        const key = dayFmt.format(d);
+        (groups[key] = groups[key] || []).push({ iso: s.iso, label: timeFmt.format(d) });
+      });
+      Object.keys(groups).forEach(day => {
+        const div = document.createElement('div'); div.className = 'day';
+        div.innerHTML = '<h3>' + day + '</h3>';
+        const box = document.createElement('div'); box.className = 'slots';
+        groups[day].forEach(s => {
+          const b = document.createElement('button'); b.className = 'slot'; b.textContent = s.label;
+          b.addEventListener('click', () => {
+            document.querySelectorAll('.slot.sel').forEach(x => x.classList.remove('sel'));
+            b.classList.add('sel'); selected = s.iso;
+            noTime.checked = false; proposeBox.style.display = 'none';
+            updateBtn();
+          });
+          box.appendChild(b);
+        });
+        div.appendChild(box); area.appendChild(div);
+      });
+    })
+    .catch(() => {
+      document.getElementById('slotsArea').innerHTML =
+        '<p class="loading">Couldn\u2019t load times right now — use "No time works for me" below and propose yours.</p>';
+    });
+
+  btn.addEventListener('click', async () => {
+    const name = document.getElementById('bname').value.trim();
+    const email = document.getElementById('bemail').value.trim();
+    if (!name || !email) { alert('Please add your name and email.'); return; }
+    const isProposal = noTime.checked;
+    if (isProposal && !document.getElementById('proposals').value.trim()) { alert('Please propose at least one time.'); return; }
+    if (!isProposal && !selected) return;
+
+    btn.disabled = true; btn.textContent = 'Sending…';
+    const body = new URLSearchParams({
+      action: isProposal ? 'propose' : 'book',
+      name, email, tz,
+      slot: selected || '',
+      proposals: document.getElementById('proposals').value.trim()
+    });
+    try {
+      await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body });
+      document.querySelector('.panel').style.display = 'none';
+      document.getElementById('slotsArea').style.display = 'none';
+      document.querySelector('.check').style.display = 'none';
+      const done = document.getElementById('done');
+      done.style.display = 'block';
+      document.getElementById('doneMsg').textContent = isProposal
+        ? 'Your proposed times are on their way to me — I\u2019ll confirm one by email shortly.'
+        : 'Check your inbox: a confirmation and a Google Calendar invite (with the meeting link) are on the way.';
+      done.scrollIntoView({ behavior: 'smooth' });
+    } catch (e) {
+      btn.disabled = false; btn.textContent = 'Try again';
+    }
+  });
+</script>
+</body>
+</html>
