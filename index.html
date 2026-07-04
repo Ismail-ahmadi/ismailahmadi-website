@@ -173,6 +173,7 @@
     .course-form{display:grid;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
     .btn.gold{background:#E8B54D;border-color:#E8B54D;color:#1A1405;font-weight:700}
     .btn.gold:hover{background:#F2C666}
+    .btn.success{background:#1E9E7E!important;border-color:#1E9E7E!important;color:#fff!important}
 
     /* pipeline */
     .pipeline{margin-top:40px;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:0;position:relative}
@@ -682,6 +683,7 @@
           <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
           <div><label for="f-name">Your name</label><input id="f-name" name="name" type="text" required autocomplete="name"></div>
           <div><label for="f-email">Your email</label><input id="f-email" name="email" type="email" required autocomplete="email"></div>
+          <div><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="+1 ..."></div>
           <div><label for="f-msg">Message</label><textarea id="f-msg" name="message" rows="4" required></textarea></div>
           <button class="btn" type="submit">Send message</button>
         </form>
@@ -886,9 +888,21 @@
         e.preventDefault();
         const btn = f.querySelector('button[type="submit"]');
         const orig = btn.textContent;
+        const isContact = f.getAttribute('name') === 'contact';
+        const fd = new FormData(f);
         btn.disabled = true; btn.textContent = 'Sending…';
         try {
-          await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(new FormData(f)) });
+          await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams(fd) });
+          if (isContact) {
+            sessionStorage.setItem('bookingInfo', JSON.stringify({
+              name: fd.get('name') || '', email: fd.get('email') || '',
+              phone: fd.get('phone') || '', message: fd.get('message') || ''
+            }));
+            btn.classList.add('success');
+            btn.textContent = '✓ Thank you! Taking you to book a call…';
+            setTimeout(() => { window.location.href = 'book.html'; }, 2000);
+            return;
+          }
           btn.textContent = '✓ Done — check your inbox!';
           f.reset();
           setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 6000);
