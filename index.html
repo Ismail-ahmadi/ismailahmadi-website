@@ -27,7 +27,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
 
   <script type="application/ld+json">
   {
@@ -45,11 +47,18 @@
   }
   </script>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QCYNSL4MEY"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date()); gtag('config', 'G-QCYNSL4MEY');
+    // Load GTM after the page has finished loading so analytics never
+    // competes with page content for bandwidth or main-thread time.
+    window.addEventListener('load', () => {
+      const s = document.createElement('script');
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QCYNSL4MEY';
+      s.async = true;
+      document.head.appendChild(s);
+    });
   </script>
 
   <style>
@@ -96,8 +105,8 @@
     .btn{display:inline-block;background:var(--blue);color:#fff;padding:10px 20px;border-radius:9px;font-weight:600;font-size:15px;border:1px solid var(--blue);cursor:pointer;transition:transform .15s ease, box-shadow .15s ease}
     .btn:hover{text-decoration:none;transform:translateY(-1px);box-shadow:0 8px 22px -10px var(--glow)}
     .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2)}
-    .icon-btn{background:transparent;border:1px solid var(--line-2);color:var(--ink);border-radius:9px;padding:8px 12px;cursor:pointer;font-family:var(--f-m);font-size:13px}
-    #theme,#palette{font-size:28px;line-height:1;padding:4px 12px}
+    .icon-btn{background:transparent;border:1px solid var(--line-2);color:var(--ink);border-radius:9px;padding:8px 12px;cursor:pointer;font-family:var(--f-m);font-size:13px;min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center}
+    #theme,#palette{font-size:24px;line-height:1;padding:8px 12px}
     .nav-toggle{display:none}
 
     /* hue picker */
@@ -318,7 +327,7 @@
 <header class="nav">
   <div class="wrap nav-in">
     <a class="brand" href="#top" aria-label="Ismail Ahmadi home">
-      <img class="brand-logo" src="assets/ismail-ahmadi-wordmark.png" alt="Ismail Ahmadi" width="218" height="129">
+      <img class="brand-logo" src="assets/ismail-ahmadi-wordmark.png" alt="Ismail Ahmadi" width="218" height="109">
     </a>
     <nav aria-label="Main">
       <button class="icon-btn nav-toggle" aria-expanded="false" aria-controls="menu">menu</button>
@@ -372,7 +381,7 @@
       <p class="eyebrow">Get to know me</p>
       <h2>About</h2>
       <div class="about-grid">
-        <img src="assets/ismail-ahmadi-ai-automation-portrait-vancouver.png" alt="Ismail Ahmadi, Business Systems Analyst, Vancouver skyline" width="720" height="960" loading="lazy">
+        <img src="assets/ismail-ahmadi-ai-automation-portrait-vancouver.webp" alt="Ismail Ahmadi, Business Systems Analyst, Vancouver skyline" width="640" height="962" loading="lazy">
         <div>
           <p>I'm a Business Systems Analyst who connects business needs with practical technology. My experience spans <b>digital product analytics, ERP implementation, e-commerce systems, and workflow improvement.</b>.</p>
           <p> In my work here in Canada, I progressed from analyzing website and customer performance to mapping and configuring ERP workflows, and then to leading broader systems migration, automation, and user adoption. This progression taught me to examine problems from both sides to know what the business needs and what the technology must do.</p>
@@ -394,10 +403,10 @@
           <p>"Outstanding test scores — among the highest in our Center's history — and a valuable resource to his faculty and classmates. Any employer would benefit from his intelligence, his interpersonal skills, and his drive."</p>
           <footer>— Dr. Lauren Clarke, Vice Rector</footer>
         </blockquote>
-        <div class="dots" role="tablist" aria-label="Choose recommendation">
-          <button class="on" aria-label="Recommendation 1"></button>
-          <button aria-label="Recommendation 2"></button>
-          <button aria-label="Recommendation 3"></button>
+        <div class="dots" role="group" aria-label="Choose recommendation">
+          <button class="on" aria-label="Recommendation 1" aria-pressed="true"></button>
+          <button aria-label="Recommendation 2" aria-pressed="false"></button>
+          <button aria-label="Recommendation 3" aria-pressed="false"></button>
         </div>
       </div>
     </div>
@@ -448,11 +457,11 @@
       <p class="sub">Everything below is real, in production today. Click a card to flip it.</p>
 
       <div class="filters" role="group" aria-label="Filter projects">
-        <button class="chip on" data-f="all">All</button>
-        <button class="chip" data-f="ai">AI</button>
-        <button class="chip" data-f="shopify">Shopify</button>
-        <button class="chip" data-f="wordpress">WordPress</button>
-        <button class="chip" data-f="volunteer">Volunteer</button>
+        <button class="chip on" data-f="all" aria-pressed="true">All</button>
+        <button class="chip" data-f="ai" aria-pressed="false">AI</button>
+        <button class="chip" data-f="shopify" aria-pressed="false">Shopify</button>
+        <button class="chip" data-f="wordpress" aria-pressed="false">WordPress</button>
+        <button class="chip" data-f="volunteer" aria-pressed="false">Volunteer</button>
       </div>
 
       <div class="grid">
@@ -629,52 +638,11 @@
   </section>
 
   <!-- AI WITH ISMAIL -->
-  <!-- <section id="subscribe">
-    <div class="wrap subwrap">
-      <div>
-        <h2><span>AI with Ismail:</span> Subscribe today</h2>
-        <p class="sub">Practical AI for people who build things. Real experiments, real results, no buzzwords — straight from my own projects to your inbox.</p>
-        <p class="sub">Subscribe and get my free 5-day email course as a welcome — from AI basics to your first working automation.</p>
-      </div>
-      <form class="subform" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field" aria-label="Subscribe to AI with Ismail">
-        <input type="hidden" name="form-name" value="newsletter">
-        <input name="email" type="email" placeholder="Enter your email" required autocomplete="email" aria-label="Email address">
-        <button type="submit">Subscribe</button>
-      </form>
-    </div>
-  </section> -->
-   <!-- FREE COURSE -->
-  <!-- <section id="course" class="bordered">
-    <div class="wrap">
-      <div class="course-panel reveal">
-        <div>
-          <p class="course-eyebrow">Free 5-day email course</p>
-          <h3>Go from AI basics to <u>building your own automations in 5 days</u></h3>
-          <ol>
-            <li><b>Build custom AI tools and workflows</b> — no coding required.</li>
-            <li><b>Turn your documents and data into an AI system</b> you can ask questions and get instant answers from.</li>
-            <li><b>Master prompting techniques</b> that get you better results, faster.</li>
-            <li><b>Launch your first AI automation for your business</b> in less than 5 days.</li>
-            <li><b>One short lesson a day</b> — delivered to your inbox, for free.</li>
-          </ol>
-        </div>
-        <form class="course-form" name="course" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="course">
-          <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
-          <div><label for="c-name">First name</label><input id="c-name" name="name" type="text" required autocomplete="given-name"></div>
-          <div><label for="c-email">Email</label><input id="c-email" name="email" type="email" required autocomplete="email"></div>
-          <button class="btn gold" type="submit">Get instant access</button>
-        </form>
-      </div>
-    </div>
-  </section>  -->
-  <!-- AI WITH ISMAIL -->
   <section id="ai-with-ismail" class="bordered">
     <div class="wrap">
       <div class="course-panel reveal">
         <div>
           <p class="course-eyebrow">AI IN PRACTICE</p>
-          <!-- <h3>AI with Ismail: Go from AI basics to <u>building your own automation in 5 days</u></h3> -->
           <h3><span class="ai">AI with Ismail</span>: Go from AI basics to <u>building your own automation in 5 days</u></h3>
           <p class="course-desc">Practical AI experiments and lessons from my own projects — real results, no buzzwords.</p>
           <ol>
@@ -686,18 +654,6 @@
           </ol>
         </div>
         
-        <!-- <form class="course-form" name="course" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="course">
-          <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
-          <div><label for="c-name">First name</label><input id="c-name" name="name" type="text" required autocomplete="given-name"></div>
-          <div><label for="c-email">Email</label><input id="c-email" name="email" type="email" required autocomplete="email"></div>
-          <label class="course-checkbox" for="c-notes">
-            <input id="c-notes" name="notes_optin" type="checkbox">
-            <span>I'd also like to receive occasional practical AI notes.</span>
-          </label>
-          <button class="btn gold" type="submit">Send me the course</button>
-        </form>
-         -->
         <form class="course-form" name="course" method="POST" data-netlify="true" netlify-honeypot="bot-field">
   <input type="hidden" name="form-name" value="course">
   <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
@@ -747,7 +703,7 @@
 
 <footer class="site">
   <div class="wrap" style="flex-direction:column;align-items:flex-start;gap:14px">
-    <img class="footer-logo" src="assets/ismail-ahmadi-logo-horizontal.png" alt="Ismail Ahmadi" width="480" height="233" style="height:84px;width:auto" loading="lazy">
+    <img class="footer-logo" src="assets/ismail-ahmadi-logo-horizontal.png" alt="Ismail Ahmadi" width="480" height="240" style="height:84px;width:auto" loading="lazy">
     <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;width:100%">
       <span>© <span id="yr">2026</span> Ismail Ahmadi. All rights reserved. Love Canada 🇨🇦</span>
       <span><a href="#top">Back to top ↑</a></span>
@@ -818,8 +774,8 @@
 
   // filters
   document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => {
-    document.querySelectorAll('.chip').forEach(x => x.classList.remove('on'));
-    c.classList.add('on');
+    document.querySelectorAll('.chip').forEach(x => { x.classList.remove('on'); x.setAttribute('aria-pressed', 'false'); });
+    c.classList.add('on'); c.setAttribute('aria-pressed', 'true');
     const f = c.dataset.f;
     document.querySelectorAll('.card').forEach(card => {
       card.classList.toggle('hide', f !== 'all' && !card.dataset.cat.split(' ').includes(f));
@@ -838,7 +794,7 @@
   function go(i) {
     cur2 = i;
     slides.forEach((s, k) => s.classList.toggle('show', k === i));
-    dots.forEach((d, k) => d.classList.toggle('on', k === i));
+    dots.forEach((d, k) => { d.classList.toggle('on', k === i); d.setAttribute('aria-pressed', k === i); });
   }
   dots.forEach((d, i) => d.addEventListener('click', () => { go(i); restart(); }));
   function restart() {

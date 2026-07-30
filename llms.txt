@@ -1,0 +1,14 @@
+# Ismail Ahmadi
+
+> Business Systems Analyst based in Metro Vancouver, BC, specializing in ERP implementation (Odoo, ERPNext), e-commerce systems (Shopify, WordPress, Amazon), and digital product analytics. Open to Business Systems Analyst, ERP Analyst, and Digital Product Analyst roles in BC.
+
+## About
+- [Home](https://ismailahmadi.com/): Overview, background, case studies, and capabilities.
+- [Schedule a Conversation](https://ismailahmadi.com/book.html): Book a 30-minute call to discuss a role or opportunity.
+
+## Background
+Ismail Ahmadi connects business needs with practical technology — requirements gathering, stakeholder management, ERP configuration and migration, e-commerce platform implementation, and applied AI for research, documentation, and workflow automation. Computer Science background with Full-Stack .NET Cloud Developer training from Humber College.
+
+## Contact
+- Email: ismail7ahmadi@gmail.com
+- LinkedIn: https://www.linkedin.com/in/ismail-ahmadi
