@@ -130,9 +130,9 @@
     .hero-sec{position:relative;overflow:hidden}
     #net{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
     .hero{position:relative;z-index:1;padding:88px 0 56px;display:grid;grid-template-columns:1.25fr .75fr;grid-template-areas:"text logo" "cta logo";gap:6px 40px;align-items:center}
-    .hero-text{grid-area:text}
+    .hero-text{grid-area:text; padding: 0px 10px;}
     .hero-logo{grid-area:logo}
-    .hero-cta{grid-area:cta}
+    .hero-cta{grid-area:cta; padding: 0px 10px;}
     .status{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-m);font-size:13px;color:var(--blue-2);border:1px solid var(--line-2);background:var(--panel);padding:7px 14px;border-radius:999px;margin-bottom:24px}
     .status .dot{width:8px;height:8px;border-radius:50%;background:var(--blue-2);animation:pulse 2.4s infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
