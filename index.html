@@ -27,9 +27,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"></noscript>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=optional">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=optional" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=optional"></noscript>
 
   <script type="application/ld+json">
   {
@@ -51,21 +51,31 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date()); gtag('config', 'G-QCYNSL4MEY');
-    // Load GTM after the page has finished loading so analytics never
-    // competes with page content for bandwidth or main-thread time.
-    window.addEventListener('load', () => {
+    // Load GTM only once the visitor actually engages with the page (or
+    // after a few idle seconds as a fallback for bots/crawlers that never
+    // scroll or click). Analytics has no business competing with real
+    // content for bytes or main-thread time during initial load.
+    let gtmLoaded = false;
+    function loadGTM() {
+      if (gtmLoaded) return;
+      gtmLoaded = true;
       const s = document.createElement('script');
       s.src = 'https://www.googletagmanager.com/gtag/js?id=G-QCYNSL4MEY';
       s.async = true;
       document.head.appendChild(s);
-    });
+      ['scroll', 'keydown', 'click', 'touchstart', 'mousemove'].forEach(evt =>
+        window.removeEventListener(evt, loadGTM));
+    }
+    ['scroll', 'keydown', 'click', 'touchstart', 'mousemove'].forEach(evt =>
+      window.addEventListener(evt, loadGTM, { passive: true, once: true }));
+    setTimeout(loadGTM, 5000);
   </script>
 
   <style>
     :root{
       --bg:#0A1426; --bg2:#0E1B33; --panel:#12234280; --panel-solid:#122342;
       --ink:#EAF1FA; --dim:#9FB4CE; --line:rgba(140,175,220,.16); --line-2:rgba(140,175,220,.28);
-      --blue:#3E7BC4; --blue-2:#6AA5E8; --glow:rgba(83,140,210,.35);
+      --blue:#356AA8; --blue-2:#6AA5E8; --glow:rgba(83,140,210,.35);
       --f-d:"Space Grotesk",system-ui,sans-serif; --f-b:"Instrument Sans",system-ui,sans-serif; --f-m:"IBM Plex Mono",ui-monospace,monospace;
     }
     html[data-theme="light"]{
@@ -166,9 +176,10 @@
     .slide{display:none;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:14px;padding:26px 30px;font-size:16px;color:var(--dim)}
     .slide.show{display:block}
     .slide footer{margin-top:12px;font-family:var(--f-m);font-size:13px;color:var(--blue-2)}
-    .dots{display:flex;gap:8px;justify-content:center;margin-top:18px}
-    .dots button{width:9px;height:9px;border-radius:50%;border:none;background:var(--line-2);cursor:pointer;padding:0}
-    .dots button.on{background:var(--blue-2)}
+    .dots{display:flex;gap:2px;justify-content:center;margin-top:18px}
+    .dots button{width:44px;height:44px;border-radius:50%;border:none;background:transparent;cursor:pointer;padding:0;position:relative;display:inline-flex;align-items:center;justify-content:center}
+    .dots button::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--line-2)}
+    .dots button.on::after{background:var(--blue-2)}
 
     /* course */
     .course-panel{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center;background:linear-gradient(150deg, color-mix(in srgb, var(--blue) 20%, var(--panel-solid)), var(--panel-solid) 65%);border:1px solid var(--line-2);border-radius:20px;padding:44px 46px;margin-top:28px}
@@ -200,7 +211,7 @@
 
     /* work — flip cards */
     .filters{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 8px}
-    .chip{font-family:var(--f-m);font-size:13px;border:1px solid var(--line-2);border-radius:999px;padding:7px 16px;color:var(--dim);background:transparent;cursor:pointer;transition:all .18s}
+    .chip{font-family:var(--f-m);font-size:13px;border:1px solid var(--line-2);border-radius:999px;padding:12px 16px;min-height:44px;display:inline-flex;align-items:center;color:var(--dim);background:transparent;cursor:pointer;transition:all .18s}
     .chip:hover{color:var(--ink);border-color:var(--blue-2)}
     .chip.on{background:var(--blue);border-color:var(--blue);color:#fff}
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:22px}
@@ -327,7 +338,7 @@
 <header class="nav">
   <div class="wrap nav-in">
     <a class="brand" href="#top" aria-label="Ismail Ahmadi home">
-      <img class="brand-logo" src="assets/ismail-ahmadi-wordmark.png" alt="Ismail Ahmadi" width="218" height="109">
+      <img class="brand-logo" src="assets/ismail-ahmadi-wordmark.webp" alt="Ismail Ahmadi" width="218" height="109">
     </a>
     <nav aria-label="Main">
       <button class="icon-btn nav-toggle" aria-expanded="false" aria-controls="menu">menu</button>
@@ -365,7 +376,7 @@
         <p class="lede">I'm <b>Ismail Ahmadi</b>, a <b>Business Systems Analyst</b> specializing in <b>ERP implementation</b>, <b>e-commerce systems</b>, and <b>digital product analytics</b>. I lead migrations, improve workflows with data, and apply <b>AI</b> where it moves the needle.</p> 
            <p>Metro Vancouver · Open to hybrid and Canada-remote roles</p>
       </div>
-      <div class="hero-logo"><img src="assets/ismail-ahmadi-logo.png" alt="Ismail Ahmadi logo — ia monogram" width="300" height="388" fetchpriority="high"></div>
+      <div class="hero-logo"><img src="assets/ismail-ahmadi-logo.webp" alt="Ismail Ahmadi logo — ia monogram" width="300" height="388" fetchpriority="high"></div>
       <div class="hero-cta">
         <a class="btn" href="#work">View Case Studies</a>
         <a class="btn ghost" href="assets/ismail-ahmadi-resume.pdf" target="_blank" rel="noopener">View Résumé</a>
@@ -703,7 +714,7 @@
 
 <footer class="site">
   <div class="wrap" style="flex-direction:column;align-items:flex-start;gap:14px">
-    <img class="footer-logo" src="assets/ismail-ahmadi-logo-horizontal.png" alt="Ismail Ahmadi" width="480" height="240" style="height:84px;width:auto" loading="lazy">
+    <img class="footer-logo" src="assets/ismail-ahmadi-logo-horizontal.webp" alt="Ismail Ahmadi" width="480" height="240" style="height:84px;width:auto" loading="lazy">
     <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;width:100%">
       <span>© <span id="yr">2026</span> Ismail Ahmadi. All rights reserved. Love Canada 🇨🇦</span>
       <span><a href="#top">Back to top ↑</a></span>
